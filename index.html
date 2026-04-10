@@ -99,17 +99,15 @@
             <div class="field">
                 <label>Loại món</label>
                 <select id="fType">
-                    <option value="Bún - Phở">Bún - Phở</option>
-                    <option value="Cơm">Cơm</option>
-                    <option value="Bánh">Bánh</option>
+                    <option value="Gà rán">Gà rán</option>
+                    <option value="Buffet">Buffet</option>
                     <option value="Hải sản">Hải sản</option>
                     <option value="Lẩu">Lẩu</option>
-                    <option value="Khai vị">Khai vị</option>
-                    <option value="Vặt">Vặt</option>
-                    <option value="Đồ uống">Đồ uống</option>
-                    <option value="Tráng miệng">Tráng miệng</option>
-                    <option value="Đặc sản">Đặc sản</option>
+                    <option value="Ăn vặt">Ăn vặt</option>
+                    <option value="Pizza">Pizza</option>
+                    <option value="Bún - Mỳ - Phở">Bún - Mỳ - Phở</option>
                     <option value="Khác">Khác</option>
+                    <option value="Nước">Nước</option>
                 </select>
             </div>
 
@@ -153,36 +151,30 @@
         };
 
         let foods = [
-            { id: 1, name: "Mỳ cay Sasin", type: "Bún - Phở", price: "50-60k", emoji: "🍜", region: "TP.HCM", address: "18 Hậu Giang, P.Bình Tây" },
-            { id: 2, name: "Bún đậu mắm tôm (Nhà Bún Đậu)", type: "Bún - Phở", price: "120–140k", emoji: "🦐", region: "TP.HCM", address: "335 Phạm Văn Chí, P.Bình Tiên" },
-            { id: 3, name: "Jollibee", type: "Cơm", price: "100-200k", emoji: "🍗", region: "TP.HCM", address: "704 Hậu Giang, P.Phú Lâm" },
-            { id: 4, name: "Lotteria", type: "Bánh", price: "100-200k", emoji: "🍗", region: "TP.HCM", address: "801 Hồng Bàng, P.Bình Tây" },
-            { id: 5, name: "Ốc, Hàu nướng anh Phúc", type: "Lẩu", price: "200–300k", emoji: "🦪", region: "TP.HCM", address: "153 Nguyễn Văn Luông, P.Phú Lâm" },
+            { id: 1, name: "Mỳ cay Sasin", type: "Bún - Mỳ - Phở", price: "50-60k", emoji: "🍜", region: "TP.HCM", address: "18 Hậu Giang, P.Bình Tây" },
+            { id: 2, name: "Nhà Bún Đậu", type: "Bún - Mỳ - Phở", price: "120-140k", emoji: "🦐", region: "TP.HCM", address: "335 Phạm Văn Chí, P.Bình Tiên" },
+            { id: 3, name: "Jollibee", type: "Gà rán", price: "100-200k", emoji: "🍗", region: "TP.HCM", address: "704 Hậu Giang, P.Phú Lâm" },
+            { id: 4, name: "Lotteria", type: "Gà rán", price: "100-200k", emoji: "🍗", region: "TP.HCM", address: "801 Hồng Bàng, P.Bình Tây" },
+            { id: 5, name: "Ốc, Hàu nướng anh Phúc", type: "Hải sản", price: "200-300k", emoji: "🦪", region: "TP.HCM", address: "153 Nguyễn Văn Luông, P.Phú Lâm" },
             { id: 6, name: "Dooki", type: "Lẩu", price: "150-300k", emoji: "🥘", region: "TP.HCM", address: "Satramart Võ Văn Kiệt" },
-            { id: 7, name: "Joseon", type: "Lẩu", price: "150–300k", emoji: "🥘", region: "TP.HCM", address: "BigC GO An Lạc" },
+            { id: 7, name: "Joseon", type: "Lẩu", price: "150-300k", emoji: "🥘", region: "TP.HCM", address: "BigC GO An Lạc" },
             { id: 8, name: "Lẩu bò chà bá", type: "Lẩu", price: "150-300k", emoji: "🥩", region: "TP.HCM", address: "Hẻm 178 Hậu Giang, P.Bình Tây" },
-            { id: 9, name: "Buffet hải sản nướng Minh cua", type: "Bún - Phở", price: "300-600k", emoji: "🍝", region: "TP.HCM", address: "99 Kinh Dương Vương, P.Phú Lâm" },
-            { id: 10, name: "TiQi Buffet cá viên chiên", type: "Đồ uống", price: "90-180k", emoji: "☕", region: "TP.HCM", address: "632 Lũy Bán Bích, P.Tân Phú" },
-            { id: 11, name: "Buffet Sushi Kinimoto", type: "Bánh", price: "30–50k", emoji: "🍣", region: "TP.HCM", address: "302 Tên lửa, P.Bình Tân" },
-            { id: 12, name: "Mỳ Udon Marukame", type: "Bún - Phở", price: "200-400k", emoji: "🍜", region: "TP.HCM", address: "Aeon Bình Tân" },
-            { id: 13, name: "Pizza Domino", type: "Hải sản", price: "200-400k", emoji: "🍕", region: "TP.HCM", address: "251 Hậu Giang, P.Bình Tây" },
-            { id: 14, name: "Ăn vặt cô Thủy", type: "Vặt", price: "100-200k", emoji: "🦀", region: "TP.HCM", address: "57 Lê Thúc Hoạch, P.Phú Thọ Hoà" },
-            { id: 15, name: "Gỏi cá mai", type: "Khai vị", price: "50–80k", emoji: "🐟", region: "Vũng Tàu", address: "Chợ Vũng Tàu, đường Nam Kỳ Khởi Nghĩa" },
-            { id: 16, name: "Nem bì Vũng Tàu", type: "Khai vị", price: "20–35k", emoji: "🌯", region: "Vũng Tàu", address: "Hẻm 33 Lý Tự Trọng, P.1" },
-            { id: 17, name: "Sò điệp nướng", type: "Hải sản", price: "60–120k", emoji: "🐚", region: "Vũng Tàu", address: "Khu ẩm thực Bãi Sau" },
-            { id: 18, name: "Phở bò Hà Nội", type: "Bún - Phở", price: "45–75k", emoji: "🍜", region: "Vũng Tàu", address: "49 Bát Đàn, Hoàn Kiếm" },
-            { id: 19, name: "Bún chả Hà Nội", type: "Bún - Phở", price: "40–65k", emoji: "🍢", region: "Hà Nội", address: "34 Hàng Than, Ba Đình" },
-            { id: 20, name: "Chả cá Lã Vọng", type: "Đặc sản", price: "100–180k", emoji: "🐠", region: "Hà Nội", address: "14 Chả Cá, Hoàn Kiếm" },
-            { id: 21, name: "Bánh cuốn Thanh Trì", type: "Bánh", price: "25–40k", emoji: "🫔", region: "Hà Nội", address: "Làng Thanh Trì, Hoàng Mai" },
-            { id: 22, name: "Xôi xéo", type: "Đặc sản", price: "20–35k", emoji: "🍙", region: "Hà Nội", address: "35B Nguyễn Hữu Huân, Hoàn Kiếm" },
-            { id: 23, name: "Bún ốc nguội", type: "Bún - Phở", price: "35–55k", emoji: "🐌", region: "Hà Nội", address: "12 Hàng Chai, Hoàn Kiếm" },
-            { id: 24, name: "Kem Tràng Tiền", type: "Tráng miệng", price: "10–20k", emoji: "🍦", region: "Hà Nội", address: "35 Tràng Tiền, Hoàn Kiếm" },
-            { id: 25, name: "Mì Quảng", type: "Bún - Phở", price: "35–55k", emoji: "🍜", region: "Đà Nẵng", address: "168 Trần Phú, Hải Châu" },
-            { id: 26, name: "Bánh mì Đà Nẵng", type: "Bánh", price: "15–35k", emoji: "🥖", region: "Đà Nẵng", address: "258 Nguyễn Chí Thanh, Hải Châu" },
-            { id: 27, name: "Bún mắm nêm", type: "Bún - Phở", price: "30–50k", emoji: "🍝", region: "Đà Nẵng", address: "Chợ Cồn, Hải Châu" },
-            { id: 28, name: "Bánh xèo miền Trung", type: "Bánh", price: "30–55k", emoji: "🥘", region: "Đà Nẵng", address: "23 Hoàng Diệu, Hải Châu" },
-            { id: 29, name: "Cơm gà Hội An", type: "Cơm", price: "40–65k", emoji: "🍗", region: "Đà Nẵng", address: "74 Phan Châu Trinh, Hải Châu" },
-            { id: 30, name: "Hải sản tươi sống", type: "Hải sản", price: "100–300k", emoji: "🦐", region: "Đà Nẵng", address: "Khu ẩm thực Mỹ Khê, Sơn Trà" },
+            { id: 9, name: "Buffet Minh cua", type: "Buffet", price: "300-600k", emoji: "🍝", region: "TP.HCM", address: "99 Kinh Dương Vương, P.Phú Lâm" },
+            { id: 10, name: "TiQi Buffet cá viên", type: "Buffet", price: "90-180k", emoji: "🍢", region: "TP.HCM", address: "632 Lũy Bán Bích, P.Tân Phú" },
+            { id: 11, name: "Buffet Sushi Kinimoto", type: "Buffet", price: "30-50k", emoji: "🍣", region: "TP.HCM", address: "302 Tên lửa, P.Bình Tân" },
+            { id: 12, name: "Mỳ Udon Marukame", type: "Bún - Mỳ - Phở", price: "200-400k", emoji: "🍜", region: "TP.HCM", address: "Aeon Bình Tân" },
+            { id: 13, name: "Pizza Domino", type: "Pizza", price: "200-400k", emoji: "🍕", region: "TP.HCM", address: "251 Hậu Giang, P.Bình Tây" },
+            { id: 14, name: "Ăn vặt cô Thủy", type: "Ăn vặt", price: "100-200k", emoji: "🍥", region: "TP.HCM", address: "57 Lê Thúc Hoạch, P.Phú Thọ Hoà" },
+            { id: 15, name: "Bánh khọt 56", type: "Ăn vặt", price: "80-160k", emoji: "🫕", region: "Vũng Tàu", address: "56 Lê Lợi, Vũng Tàu" },
+            { id: 16, name: "Lẩu cá đuối", type: "Lẩu", price: "100-200k", emoji: "🥘", region: "Vũng Tàu", address: "169 Nam Kỳ Khởi Nghĩa, Vũng Tàu" },
+            { id: 17, name: "Ốc nướng nhà Chang", type: "Hải sản", price: "40-200k", emoji: "🐚", region: "Vũng Tàu", address: "126 Nam Kỳ Khởi Nghĩa, Vũng Tàu" },
+            { id: 18, name: "Bún riêu cô Hạnh", type: "Bún - Mỳ - Phở", price: "45-75k", emoji: "🍜", region: "Vũng Tàu", address: "115/10 Lê Lợi, Vũng Tàu" },
+            { id: 19, name: "Hủ Tiếu Quán", type: "Bún - Mỳ - Phở", price: "50-100k", emoji: "🍜", region: "Vũng Tàu", address: "241 Lê Hồng Phong, Vũng Tàu" },
+            { id: 20, name: "Quán cơm A Tố", type: "Khác", price: "30-60k", emoji: "🍛", region: "Vũng Tàu", address: "443 Trương Công Định, Vũng Tàu" },
+            { id: 21, name: "Bánh bông lan Nguyễn Hoàng Bakery", type: "Ăn vặt", price: "50-100k", emoji: "🍰", region: "Vũng Tàu", address: "67 Nam Kỳ Khởi Nghĩa, Vũng Tàu" },
+            { id: 22, name: "Cơm gà Thạch Lam", type: "Khác", price: "45-90k", emoji: "🍛", region: "TP.HCM", address: "277D Kênh Tân Hóa, P.Tân Phú" },
+            { id: 23, name: "Gu Coffee", type: "Nước", price: "35-60k", emoji: "☕️", region: "Vũng Tàu", address: "103 Trần Phú, Vũng Tàu" },
+            { id: 24, name: "The MayDay Tea", type: "Nước", price: "25-40k", emoji: "☕️", region: "TP.HCM", address: "320 Trịnh Đình Trọng, Tân Phú" },
         ];
 
         let nextId = 31;
