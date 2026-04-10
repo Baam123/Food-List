@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <title>Ăn Gì Đây 🍜</title>
+    <title>Ăn Gì Đây</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
         href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap"
@@ -52,6 +52,7 @@
             <div class="random-center">
                 <div class="random-dish-name" id="randomDishName">Nhấn nút →</div>
                 <div class="random-dish-meta" id="randomDishMeta"></div>
+                <div class="random-dish-address" id="randomDishAddress"></div>
             </div>
             <button class="random-btn" onclick="randomFood()">
                 <span class="dice-icon">🎲</span> Random
@@ -123,6 +124,11 @@
             </div>
 
             <div class="field">
+                <label>Địa chỉ cụ thể</label>
+                <input type="text" id="fAddress" placeholder="Ví dụ: 12 Nguyễn Trãi, Q.1" />
+            </div>
+
+            <div class="field">
                 <label>Giá tham khảo</label>
                 <input type="text" id="fPrice" placeholder="Ví dụ: 35–55k" />
             </div>
@@ -133,6 +139,9 @@
             </div>
         </div>
     </div>
+    <footer style="text-align:center; padding: 20px; font-size: 13px; color: var(--text3);">
+        Made with ❤️ by <strong style="color: var(--text2);">QuyCo</strong>
+    </footer>
 
     <script>
         // ====== DATA ======
@@ -144,36 +153,36 @@
         };
 
         let foods = [
-            { id: 1, name: "Hủ tiếu Nam Vang", type: "Bún - Phở", price: "35–55k", emoji: "🍜", region: "TP.HCM" },
-            { id: 2, name: "Bánh mì Sài Gòn", type: "Bánh", price: "20–40k", emoji: "🥖", region: "TP.HCM" },
-            { id: 3, name: "Cơm tấm sườn bì", type: "Cơm", price: "40–65k", emoji: "🍚", region: "TP.HCM" },
-            { id: 4, name: "Bánh cuốn Tây Hồ", type: "Bánh", price: "30–50k", emoji: "🫔", region: "TP.HCM" },
-            { id: 5, name: "Lẩu mắm miền Tây", type: "Lẩu", price: "120–200k", emoji: "🫕", region: "TP.HCM" },
-            { id: 6, name: "Chè khúc bạch", type: "Tráng miệng", price: "25–45k", emoji: "🍮", region: "TP.HCM" },
-            { id: 7, name: "Gỏi cuốn tôm thịt", type: "Khai vị", price: "15–30k", emoji: "🌿", region: "TP.HCM" },
-            { id: 8, name: "Bánh tráng trộn", type: "Vặt", price: "15–25k", emoji: "🌶️", region: "TP.HCM" },
-            { id: 9, name: "Bún bò Huế", type: "Bún - Phở", price: "40–60k", emoji: "🍝", region: "TP.HCM" },
-            { id: 10, name: "Cà phê sữa đá", type: "Đồ uống", price: "25–40k", emoji: "☕", region: "TP.HCM" },
-            { id: 11, name: "Bánh khọt Vũng Tàu", type: "Bánh", price: "30–50k", emoji: "🥞", region: "Vũng Tàu" },
-            { id: 12, name: "Bún quậy tôm cua", type: "Bún - Phở", price: "45–70k", emoji: "🦀", region: "Vũng Tàu" },
-            { id: 13, name: "Hải sản nướng tươi", type: "Hải sản", price: "150–400k", emoji: "🦞", region: "Vũng Tàu" },
-            { id: 14, name: "Bánh canh ghẹ", type: "Bún - Phở", price: "60–90k", emoji: "🦀", region: "Vũng Tàu" },
-            { id: 15, name: "Gỏi cá mai", type: "Khai vị", price: "50–80k", emoji: "🐟", region: "Vũng Tàu" },
-            { id: 16, name: "Nem bì Vũng Tàu", type: "Khai vị", price: "20–35k", emoji: "🌯", region: "Vũng Tàu" },
-            { id: 17, name: "Sò điệp nướng", type: "Hải sản", price: "60–120k", emoji: "🐚", region: "Vũng Tàu" },
-            { id: 18, name: "Phở bò Hà Nội", type: "Bún - Phở", price: "45–75k", emoji: "🍜", region: "Hà Nội" },
-            { id: 19, name: "Bún chả Hà Nội", type: "Bún - Phở", price: "40–65k", emoji: "🍢", region: "Hà Nội" },
-            { id: 20, name: "Chả cá Lã Vọng", type: "Đặc sản", price: "100–180k", emoji: "🐠", region: "Hà Nội" },
-            { id: 21, name: "Bánh cuốn Thanh Trì", type: "Bánh", price: "25–40k", emoji: "🫔", region: "Hà Nội" },
-            { id: 22, name: "Xôi xéo", type: "Đặc sản", price: "20–35k", emoji: "🍙", region: "Hà Nội" },
-            { id: 23, name: "Bún ốc nguội", type: "Bún - Phở", price: "35–55k", emoji: "🐌", region: "Hà Nội" },
-            { id: 24, name: "Kem Tràng Tiền", type: "Tráng miệng", price: "10–20k", emoji: "🍦", region: "Hà Nội" },
-            { id: 25, name: "Mì Quảng", type: "Bún - Phở", price: "35–55k", emoji: "🍜", region: "Đà Nẵng" },
-            { id: 26, name: "Bánh mì Đà Nẵng", type: "Bánh", price: "15–35k", emoji: "🥖", region: "Đà Nẵng" },
-            { id: 27, name: "Bún mắm nêm", type: "Bún - Phở", price: "30–50k", emoji: "🍝", region: "Đà Nẵng" },
-            { id: 28, name: "Bánh xèo miền Trung", type: "Bánh", price: "30–55k", emoji: "🥘", region: "Đà Nẵng" },
-            { id: 29, name: "Cơm gà Hội An", type: "Cơm", price: "40–65k", emoji: "🍗", region: "Đà Nẵng" },
-            { id: 30, name: "Hải sản tươi sống", type: "Hải sản", price: "100–300k", emoji: "🦐", region: "Đà Nẵng" },
+            { id: 1, name: "Hủ tiếu Nam Vang", type: "Bún - Phở", price: "35–55k", emoji: "🍜", region: "TP.HCM", address: "79 Võ Văn Tần, Q.3" },
+            { id: 2, name: "Bánh mì Sài Gòn", type: "Bánh", price: "20–40k", emoji: "🥖", region: "TP.HCM", address: "37 Nguyễn Trãi, Q.1" },
+            { id: 3, name: "Cơm tấm sườn bì", type: "Cơm", price: "40–65k", emoji: "🍚", region: "TP.HCM", address: "84 Đinh Tiên Hoàng, Bình Thạnh" },
+            { id: 4, name: "Bánh cuốn Tây Hồ", type: "Bánh", price: "30–50k", emoji: "🫔", region: "TP.HCM", address: "233 Hoàng Văn Thụ, Tân Bình" },
+            { id: 5, name: "Lẩu mắm miền Tây", type: "Lẩu", price: "120–200k", emoji: "🫕", region: "TP.HCM", address: "15 Lê Văn Sỹ, Q.3" },
+            { id: 6, name: "Chè khúc bạch", type: "Tráng miệng", price: "25–45k", emoji: "🍮", region: "TP.HCM", address: "Hẻm 31 Trần Nhật Duật, Q.1" },
+            { id: 7, name: "Gỏi cuốn tôm thịt", type: "Khai vị", price: "15–30k", emoji: "🌿", region: "TP.HCM", address: "62 Hai Bà Trưng, Q.1" },
+            { id: 8, name: "Bánh tráng trộn", type: "Vặt", price: "15–25k", emoji: "🌶️", region: "TP.HCM", address: "Khu ẩm thực Vĩnh Khánh, Q.4" },
+            { id: 9, name: "Bún bò Huế", type: "Bún - Phở", price: "40–60k", emoji: "🍝", region: "TP.HCM", address: "19 Kỳ Đồng, Q.3" },
+            { id: 10, name: "Cà phê sữa đá", type: "Đồ uống", price: "25–40k", emoji: "☕", region: "TP.HCM", address: "Nhiều nơi trên toàn TP" },
+            { id: 11, name: "Bánh khọt Vũng Tàu", type: "Bánh", price: "30–50k", emoji: "🥞", region: "Vũng Tàu", address: "14 Nguyễn Trường Tộ, P.2" },
+            { id: 12, name: "Bún quậy tôm cua", type: "Bún - Phở", price: "45–70k", emoji: "🦀", region: "Vũng Tàu", address: "57 Trần Hưng Đạo, P.1" },
+            { id: 13, name: "Hải sản nướng tươi", type: "Hải sản", price: "150–400k", emoji: "🦞", region: "Vũng Tàu", address: "Khu hải sản Bãi Trước" },
+            { id: 14, name: "Bánh canh ghẹ", type: "Bún - Phở", price: "60–90k", emoji: "🦀", region: "Vũng Tàu", address: "102 Hoàng Hoa Thám, P.2" },
+            { id: 15, name: "Gỏi cá mai", type: "Khai vị", price: "50–80k", emoji: "🐟", region: "Vũng Tàu", address: "Chợ Vũng Tàu, đường Nam Kỳ Khởi Nghĩa" },
+            { id: 16, name: "Nem bì Vũng Tàu", type: "Khai vị", price: "20–35k", emoji: "🌯", region: "Vũng Tàu", address: "Hẻm 33 Lý Tự Trọng, P.1" },
+            { id: 17, name: "Sò điệp nướng", type: "Hải sản", price: "60–120k", emoji: "🐚", region: "Vũng Tàu", address: "Khu ẩm thực Bãi Sau" },
+            { id: 18, name: "Phở bò Hà Nội", type: "Bún - Phở", price: "45–75k", emoji: "🍜", region: "Hà Nội", address: "49 Bát Đàn, Hoàn Kiếm" },
+            { id: 19, name: "Bún chả Hà Nội", type: "Bún - Phở", price: "40–65k", emoji: "🍢", region: "Hà Nội", address: "34 Hàng Than, Ba Đình" },
+            { id: 20, name: "Chả cá Lã Vọng", type: "Đặc sản", price: "100–180k", emoji: "🐠", region: "Hà Nội", address: "14 Chả Cá, Hoàn Kiếm" },
+            { id: 21, name: "Bánh cuốn Thanh Trì", type: "Bánh", price: "25–40k", emoji: "🫔", region: "Hà Nội", address: "Làng Thanh Trì, Hoàng Mai" },
+            { id: 22, name: "Xôi xéo", type: "Đặc sản", price: "20–35k", emoji: "🍙", region: "Hà Nội", address: "35B Nguyễn Hữu Huân, Hoàn Kiếm" },
+            { id: 23, name: "Bún ốc nguội", type: "Bún - Phở", price: "35–55k", emoji: "🐌", region: "Hà Nội", address: "12 Hàng Chai, Hoàn Kiếm" },
+            { id: 24, name: "Kem Tràng Tiền", type: "Tráng miệng", price: "10–20k", emoji: "🍦", region: "Hà Nội", address: "35 Tràng Tiền, Hoàn Kiếm" },
+            { id: 25, name: "Mì Quảng", type: "Bún - Phở", price: "35–55k", emoji: "🍜", region: "Đà Nẵng", address: "168 Trần Phú, Hải Châu" },
+            { id: 26, name: "Bánh mì Đà Nẵng", type: "Bánh", price: "15–35k", emoji: "🥖", region: "Đà Nẵng", address: "258 Nguyễn Chí Thanh, Hải Châu" },
+            { id: 27, name: "Bún mắm nêm", type: "Bún - Phở", price: "30–50k", emoji: "🍝", region: "Đà Nẵng", address: "Chợ Cồn, Hải Châu" },
+            { id: 28, name: "Bánh xèo miền Trung", type: "Bánh", price: "30–55k", emoji: "🥘", region: "Đà Nẵng", address: "23 Hoàng Diệu, Hải Châu" },
+            { id: 29, name: "Cơm gà Hội An", type: "Cơm", price: "40–65k", emoji: "🍗", region: "Đà Nẵng", address: "74 Phan Châu Trinh, Hải Châu" },
+            { id: 30, name: "Hải sản tươi sống", type: "Hải sản", price: "100–300k", emoji: "🦐", region: "Đà Nẵng", address: "Khu ẩm thực Mỹ Khê, Sơn Trà" },
         ];
 
         let nextId = 31;
@@ -204,7 +213,7 @@
                 const regionOk = activeRegion === "all" || f.region === activeRegion;
                 const typeOk = activeType === "all" || f.type === activeType;
                 const q = searchQuery.toLowerCase();
-                const searchOk = !q || f.name.toLowerCase().includes(q) || f.type.toLowerCase().includes(q) || f.region.toLowerCase().includes(q);
+                const searchOk = !q || f.name.toLowerCase().includes(q) || f.type.toLowerCase().includes(q) || f.region.toLowerCase().includes(q) || (f.address || "").toLowerCase().includes(q);
                 return regionOk && typeOk && searchOk;
             });
         }
@@ -292,6 +301,7 @@
         <span class="food-tag">${f.type}</span>
         ${activeRegion === 'all' ? `<span class="food-tag region">${f.region}</span>` : ''}
       </div>
+      ${f.address ? `<div class="food-address">📍 ${f.address}</div>` : ''}
       <div class="food-price">${f.price || ""}</div>
     </div>
   `;
@@ -318,9 +328,9 @@
 
         function updateRandomRegion(val) {
             randomRegion = val;
-            // reset kết quả cũ khi đổi khu
             document.getElementById("randomDishName").textContent = "Nhấn nút →";
             document.getElementById("randomDishMeta").textContent = "";
+            document.getElementById("randomDishAddress").textContent = "";
             highlightedId = null;
             renderContent();
         }
@@ -336,12 +346,14 @@
 
             const nameEl = document.getElementById("randomDishName");
             const metaEl = document.getElementById("randomDishMeta");
+            const addrEl = document.getElementById("randomDishAddress");
 
             nameEl.className = "random-dish-name";
             void nameEl.offsetWidth;
             nameEl.className = "random-dish-name pop";
             nameEl.textContent = `${f.emoji || ""} ${f.name}`;
             metaEl.textContent = `${f.type} · ${f.price} · ${f.region}`;
+            addrEl.textContent = f.address ? `📍 ${f.address}` : "";
 
             if (activeRegion !== "all" && activeRegion !== f.region) {
                 activeRegion = "all";
@@ -373,6 +385,7 @@
             document.getElementById("fName").value = "";
             document.getElementById("fEmoji").value = "";
             document.getElementById("fPrice").value = "";
+            document.getElementById("fAddress").value = "";
         }
 
         function closeModalOutside(e) {
@@ -394,6 +407,7 @@
                 emoji: document.getElementById("fEmoji").value.trim() || "🍽️",
                 type: document.getElementById("fType").value,
                 region: document.getElementById("fRegion").value,
+                address: document.getElementById("fAddress").value.trim() || "",
                 price: document.getElementById("fPrice").value.trim() || "",
             };
 
