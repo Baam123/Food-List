@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <title>Ăn Gì Đây 🍜</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <link href="./logo.png" rel="icon" type="image/x-icon" />
+</head>
+
+<body>
+    <header>
+        <div class="header-inner">
+            <div class="logo">
+                🍜 Ăn Gì Đây
+            </div>
+            <div class="search-wrap">
+                <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="8.5" cy="8.5" r="5.5" />
+                    <path d="M15 15l-3.5-3.5" />
+                </svg>
+                <input type="search" id="searchInput" placeholder="Tìm món ăn..." autocomplete="off" />
+            </div>
+        </div>
+    </header>
+
+    <div class="tabs-wrapper">
+        <div class="tabs-inner">
+            <div class="tabs-scroll" id="tabsScroll"></div>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="random-banner">
+            <div class="random-left">
+                <div class="random-label">Bữa nay ăn gì?</div>
+                <div class="random-select-wrap">
+                    <select id="randomRegionSelect" onchange="updateRandomRegion(this.value)">
+                        <option value="all">🗺️ Tất cả khu</option>
+                        <option value="TP.HCM">🏙️ TP.HCM</option>
+                        <option value="Vũng Tàu">🏖️ Vũng Tàu</option>
+                        <option value="Hà Nội">🏛️ Hà Nội</option>
+                        <option value="Đà Nẵng">⛰️ Đà Nẵng</option>
+                    </select>
+                </div>
+            </div>
+            <div class="random-center">
+                <div class="random-dish-name" id="randomDishName">Nhấn nút →</div>
+                <div class="random-dish-meta" id="randomDishMeta"></div>
+            </div>
+            <button class="random-btn" onclick="randomFood()">
+                <span class="dice-icon">🎲</span> Random
+            </button>
+        </div>
+
+        <div class="filter-row">
+            <span class="filter-label">Lọc:</span>
+            <div class="chips-scroll" id="chipsScroll"></div>
+        </div>
+
+        <div class="section-header">
+            <div class="section-title" id="sectionTitle">🗺️ Tất cả</div>
+            <div class="section-count" id="sectionCount">0 món</div>
+        </div>
+
+        <div id="foodContent"></div>
+    </main>
+
+    <button class="fab" onclick="openModal()">
+        <span>+</span> Thêm món
+    </button>
+
+    <button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})"
+        title="Lên đầu trang">↑</button>
+
+    <div class="modal-backdrop" id="modalBackdrop" onclick="closeModalOutside(event)">
+        <div class="modal">
+            <div class="modal-title">
+                Thêm món mới 🍽️
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+
+            <div class="field">
+                <label>Emoji món ăn</label>
+                <input type="text" id="fEmoji" placeholder="🍜" maxlength="4" />
+            </div>
+
+            <div class="field">
+                <label>Tên món *</label>
+                <input type="text" id="fName" placeholder="Ví dụ: Phở bò tái" />
+            </div>
+
+            <div class="field">
+                <label>Loại món</label>
+                <select id="fType">
+                    <option value="Bún - Phở">Bún - Phở</option>
+                    <option value="Cơm">Cơm</option>
+                    <option value="Bánh">Bánh</option>
+                    <option value="Hải sản">Hải sản</option>
+                    <option value="Lẩu">Lẩu</option>
+                    <option value="Khai vị">Khai vị</option>
+                    <option value="Vặt">Vặt</option>
+                    <option value="Đồ uống">Đồ uống</option>
+                    <option value="Tráng miệng">Tráng miệng</option>
+                    <option value="Đặc sản">Đặc sản</option>
+                    <option value="Khác">Khác</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Khu vực</label>
+                <select id="fRegion">
+                    <option value="TP.HCM">TP.HCM</option>
+                    <option value="Vũng Tàu">Vũng Tàu</option>
+                    <option value="Hà Nội">Hà Nội</option>
+                    <option value="Đà Nẵng">Đà Nẵng</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label>Giá tham khảo</label>
+                <input type="text" id="fPrice" placeholder="Ví dụ: 35–55k" />
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeModal()">Huỷ</button>
+                <button class="btn-add" onclick="addFood()">✓ Thêm vào danh sách</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====== DATA ======
+        const REGIONS = {
+            "TP.HCM": { emoji: "🏙️" },
+            "Vũng Tàu": { emoji: "🏖️" },
+            "Hà Nội": { emoji: "🏛️" },
+            "Đà Nẵng": { emoji: "⛰️" },
+        };
+
+        let foods = [
+            { id: 1, name: "Hủ tiếu Nam Vang", type: "Bún - Phở", price: "35–55k", emoji: "🍜", region: "TP.HCM" },
+            { id: 2, name: "Bánh mì Sài Gòn", type: "Bánh", price: "20–40k", emoji: "🥖", region: "TP.HCM" },
+            { id: 3, name: "Cơm tấm sườn bì", type: "Cơm", price: "40–65k", emoji: "🍚", region: "TP.HCM" },
+            { id: 4, name: "Bánh cuốn Tây Hồ", type: "Bánh", price: "30–50k", emoji: "🫔", region: "TP.HCM" },
+            { id: 5, name: "Lẩu mắm miền Tây", type: "Lẩu", price: "120–200k", emoji: "🫕", region: "TP.HCM" },
+            { id: 6, name: "Chè khúc bạch", type: "Tráng miệng", price: "25–45k", emoji: "🍮", region: "TP.HCM" },
+            { id: 7, name: "Gỏi cuốn tôm thịt", type: "Khai vị", price: "15–30k", emoji: "🌿", region: "TP.HCM" },
+            { id: 8, name: "Bánh tráng trộn", type: "Vặt", price: "15–25k", emoji: "🌶️", region: "TP.HCM" },
+            { id: 9, name: "Bún bò Huế", type: "Bún - Phở", price: "40–60k", emoji: "🍝", region: "TP.HCM" },
+            { id: 10, name: "Cà phê sữa đá", type: "Đồ uống", price: "25–40k", emoji: "☕", region: "TP.HCM" },
+            { id: 11, name: "Bánh khọt Vũng Tàu", type: "Bánh", price: "30–50k", emoji: "🥞", region: "Vũng Tàu" },
+            { id: 12, name: "Bún quậy tôm cua", type: "Bún - Phở", price: "45–70k", emoji: "🦀", region: "Vũng Tàu" },
+            { id: 13, name: "Hải sản nướng tươi", type: "Hải sản", price: "150–400k", emoji: "🦞", region: "Vũng Tàu" },
+            { id: 14, name: "Bánh canh ghẹ", type: "Bún - Phở", price: "60–90k", emoji: "🦀", region: "Vũng Tàu" },
+            { id: 15, name: "Gỏi cá mai", type: "Khai vị", price: "50–80k", emoji: "🐟", region: "Vũng Tàu" },
+            { id: 16, name: "Nem bì Vũng Tàu", type: "Khai vị", price: "20–35k", emoji: "🌯", region: "Vũng Tàu" },
+            { id: 17, name: "Sò điệp nướng", type: "Hải sản", price: "60–120k", emoji: "🐚", region: "Vũng Tàu" },
+            { id: 18, name: "Phở bò Hà Nội", type: "Bún - Phở", price: "45–75k", emoji: "🍜", region: "Hà Nội" },
+            { id: 19, name: "Bún chả Hà Nội", type: "Bún - Phở", price: "40–65k", emoji: "🍢", region: "Hà Nội" },
+            { id: 20, name: "Chả cá Lã Vọng", type: "Đặc sản", price: "100–180k", emoji: "🐠", region: "Hà Nội" },
+            { id: 21, name: "Bánh cuốn Thanh Trì", type: "Bánh", price: "25–40k", emoji: "🫔", region: "Hà Nội" },
+            { id: 22, name: "Xôi xéo", type: "Đặc sản", price: "20–35k", emoji: "🍙", region: "Hà Nội" },
+            { id: 23, name: "Bún ốc nguội", type: "Bún - Phở", price: "35–55k", emoji: "🐌", region: "Hà Nội" },
+            { id: 24, name: "Kem Tràng Tiền", type: "Tráng miệng", price: "10–20k", emoji: "🍦", region: "Hà Nội" },
+            { id: 25, name: "Mì Quảng", type: "Bún - Phở", price: "35–55k", emoji: "🍜", region: "Đà Nẵng" },
+            { id: 26, name: "Bánh mì Đà Nẵng", type: "Bánh", price: "15–35k", emoji: "🥖", region: "Đà Nẵng" },
+            { id: 27, name: "Bún mắm nêm", type: "Bún - Phở", price: "30–50k", emoji: "🍝", region: "Đà Nẵng" },
+            { id: 28, name: "Bánh xèo miền Trung", type: "Bánh", price: "30–55k", emoji: "🥘", region: "Đà Nẵng" },
+            { id: 29, name: "Cơm gà Hội An", type: "Cơm", price: "40–65k", emoji: "🍗", region: "Đà Nẵng" },
+            { id: 30, name: "Hải sản tươi sống", type: "Hải sản", price: "100–300k", emoji: "🦐", region: "Đà Nẵng" },
+        ];
+
+        let nextId = 31;
+        let activeRegion = "all";
+        let activeType = "all";
+        let searchQuery = "";
+        let highlightedId = null;
+        let randomRegion = "all";
+
+        function loadData() {
+            try {
+                const saved = localStorage.getItem("an-gi-day-foods");
+                if (saved) foods = JSON.parse(saved);
+                const savedId = localStorage.getItem("an-gi-day-nextid");
+                if (savedId) nextId = parseInt(savedId);
+            } catch (e) { }
+        }
+
+        function saveData() {
+            try {
+                localStorage.setItem("an-gi-day-foods", JSON.stringify(foods));
+                localStorage.setItem("an-gi-day-nextid", String(nextId));
+            } catch (e) { }
+        }
+
+        function getFiltered() {
+            return foods.filter(f => {
+                const regionOk = activeRegion === "all" || f.region === activeRegion;
+                const typeOk = activeType === "all" || f.type === activeType;
+                const q = searchQuery.toLowerCase();
+                const searchOk = !q || f.name.toLowerCase().includes(q) || f.type.toLowerCase().includes(q) || f.region.toLowerCase().includes(q);
+                return regionOk && typeOk && searchOk;
+            });
+        }
+
+        function getTypes() {
+            const source = activeRegion === "all" ? foods : foods.filter(f => f.region === activeRegion);
+            return [...new Set(source.map(f => f.type))].sort();
+        }
+
+        function renderTabs() {
+            const el = document.getElementById("tabsScroll");
+            const tabs = [
+                { key: "all", label: "Tất cả", emoji: "🗺️" },
+                ...Object.entries(REGIONS).map(([k, v]) => ({ key: k, label: k, emoji: v.emoji })),
+            ];
+            el.innerHTML = tabs.map(t => `
+    <button class="tab ${activeRegion === t.key ? 'active' : ''}" onclick="selectRegion('${t.key}')">
+      ${t.emoji} ${t.label}
+    </button>
+  `).join("");
+        }
+
+        function renderChips() {
+            const el = document.getElementById("chipsScroll");
+            const types = getTypes();
+            el.innerHTML = `<button class="chip ${activeType === 'all' ? 'active' : ''}" onclick="selectType('all')">Tất cả</button>` +
+                types.map(t => `<button class="chip ${activeType === t ? 'active' : ''}" onclick="selectType('${t}')">${t}</button>`).join("");
+        }
+
+        function renderContent() {
+            const filtered = getFiltered();
+            const el = document.getElementById("foodContent");
+            const countEl = document.getElementById("sectionCount");
+            const titleEl = document.getElementById("sectionTitle");
+
+            countEl.textContent = `${filtered.length} món`;
+
+            const regionInfo = REGIONS[activeRegion];
+            if (activeRegion === "all") {
+                titleEl.innerHTML = `🗺️ Tất cả`;
+            } else {
+                titleEl.innerHTML = `${regionInfo.emoji} ${activeRegion}`;
+            }
+
+            if (!filtered.length) {
+                el.innerHTML = `<div class="food-grid"><div class="empty">
+      <div class="empty-icon">🤔</div>
+      <div class="empty-text">Không tìm thấy món nào</div>
+      <div class="empty-sub">Thử thay đổi bộ lọc hoặc thêm món mới</div>
+    </div></div>`;
+                return;
+            }
+
+            // Group by region if "all"
+            if (activeRegion === "all" && !searchQuery && activeType === "all") {
+                const grouped = {};
+                filtered.forEach(f => {
+                    if (!grouped[f.region]) grouped[f.region] = [];
+                    grouped[f.region].push(f);
+                });
+
+                el.innerHTML = Object.entries(grouped).map(([region, items]) => `
+      <div class="region-section">
+        <div class="region-heading">
+          ${REGIONS[region]?.emoji || "📍"} ${region}
+          <span style="font-size:12px;font-weight:400;color:var(--text3);margin-left:4px;">${items.length} món</span>
+        </div>
+        <div class="food-grid">
+          ${items.map(f => cardHTML(f)).join("")}
+        </div>
+      </div>
+    `).join("");
+            } else {
+                el.innerHTML = `<div class="food-grid">${filtered.map(f => cardHTML(f)).join("")}</div>`;
+            }
+        }
+
+        function cardHTML(f) {
+            const highlighted = highlightedId === f.id;
+            return `
+    <div class="food-card ${highlighted ? 'highlighted' : ''}" id="card-${f.id}">
+      <span class="food-emoji">${f.emoji || "🍽️"}</span>
+      <div class="food-name">${f.name}</div>
+      <div class="food-tags">
+        <span class="food-tag">${f.type}</span>
+        ${activeRegion === 'all' ? `<span class="food-tag region">${f.region}</span>` : ''}
+      </div>
+      <div class="food-price">${f.price || ""}</div>
+    </div>
+  `;
+        }
+
+        function render() {
+            renderTabs();
+            renderChips();
+            renderContent();
+        }
+
+        function selectRegion(r) {
+            activeRegion = r;
+            activeType = "all";
+            highlightedId = null;
+            render();
+        }
+
+        function selectType(t) {
+            activeType = t;
+            highlightedId = null;
+            render();
+        }
+
+        function updateRandomRegion(val) {
+            randomRegion = val;
+            // reset kết quả cũ khi đổi khu
+            document.getElementById("randomDishName").textContent = "Nhấn nút →";
+            document.getElementById("randomDishMeta").textContent = "";
+            highlightedId = null;
+            renderContent();
+        }
+
+        function randomFood() {
+            const pool = randomRegion === "all"
+                ? foods
+                : foods.filter(f => f.region === randomRegion);
+            if (!pool.length) return;
+
+            const f = pool[Math.floor(Math.random() * pool.length)];
+            highlightedId = f.id;
+
+            const nameEl = document.getElementById("randomDishName");
+            const metaEl = document.getElementById("randomDishMeta");
+
+            nameEl.className = "random-dish-name";
+            void nameEl.offsetWidth;
+            nameEl.className = "random-dish-name pop";
+            nameEl.textContent = `${f.emoji || ""} ${f.name}`;
+            metaEl.textContent = `${f.type} · ${f.price} · ${f.region}`;
+
+            if (activeRegion !== "all" && activeRegion !== f.region) {
+                activeRegion = "all";
+                activeType = "all";
+            }
+
+            render();
+
+            setTimeout(() => {
+                const card = document.getElementById("card-" + f.id);
+                if (card) card.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 150);
+        }
+
+        document.getElementById("searchInput").addEventListener("input", function () {
+            searchQuery = this.value.trim();
+            highlightedId = null;
+            renderContent();
+            document.getElementById("sectionCount").textContent = `${getFiltered().length} món`;
+        });
+
+        function openModal() {
+            document.getElementById("modalBackdrop").classList.add("open");
+            document.getElementById("fName").focus();
+        }
+
+        function closeModal() {
+            document.getElementById("modalBackdrop").classList.remove("open");
+            document.getElementById("fName").value = "";
+            document.getElementById("fEmoji").value = "";
+            document.getElementById("fPrice").value = "";
+        }
+
+        function closeModalOutside(e) {
+            if (e.target === document.getElementById("modalBackdrop")) closeModal();
+        }
+
+        function addFood() {
+            const name = document.getElementById("fName").value.trim();
+            if (!name) {
+                document.getElementById("fName").focus();
+                document.getElementById("fName").style.borderColor = "var(--coral)";
+                return;
+            }
+            document.getElementById("fName").style.borderColor = "";
+
+            const f = {
+                id: nextId++,
+                name,
+                emoji: document.getElementById("fEmoji").value.trim() || "🍽️",
+                type: document.getElementById("fType").value,
+                region: document.getElementById("fRegion").value,
+                price: document.getElementById("fPrice").value.trim() || "",
+            };
+
+            foods.push(f);
+            saveData();
+            closeModal();
+
+            activeRegion = f.region;
+            activeType = "all";
+            highlightedId = f.id;
+            render();
+
+            setTimeout(() => {
+                const card = document.getElementById("card-" + f.id);
+                if (card) card.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 150);
+        }
+
+        window.addEventListener("scroll", () => {
+            const btn = document.getElementById("scrollTopBtn");
+            if (window.scrollY > 300) btn.classList.add("visible");
+            else btn.classList.remove("visible");
+        });
+
+        loadData();
+        render();
+    </script>
+</body>
+
+</html>
