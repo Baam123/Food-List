@@ -137,6 +137,19 @@
             </div>
         </div>
     </div>
+    <!-- Detail Modal -->
+    <div class="modal-backdrop" id="detailBackdrop" onclick="closeDetailOutside(event)">
+        <div class="modal detail-modal">
+            <div class="detail-emoji-wrap" id="detailEmoji"></div>
+            <div class="modal-title" style="margin-bottom:8px;">
+                <span id="detailName"></span>
+                <button class="modal-close" onclick="closeDetail()">✕</button>
+            </div>
+            <div class="detail-tags" id="detailTags"></div>
+            <div class="detail-rows" id="detailRows"></div>
+        </div>
+    </div>
+
     <footer style="text-align:center; padding: 20px; font-size: 13px; color: var(--text3);">
         Made with ❤️ by <strong style="color: var(--text2);">QuyCo</strong>
     </footer>
@@ -286,7 +299,7 @@
         function cardHTML(f) {
             const highlighted = highlightedId === f.id;
             return `
-    <div class="food-card ${highlighted ? 'highlighted' : ''}" id="card-${f.id}">
+    <div class="food-card ${highlighted ? 'highlighted' : ''}" id="card-${f.id}" onclick="openDetail(${f.id})">
       <span class="food-emoji">${f.emoji || "🍽️"}</span>
       <div class="food-name">${f.name}</div>
       <div class="food-tags">
@@ -297,6 +310,32 @@
       <div class="food-price">${f.price || ""}</div>
     </div>
   `;
+        }
+
+        function openDetail(id) {
+            const f = foods.find(x => x.id === id);
+            if (!f) return;
+            const regionEmoji = REGIONS[f.region]?.emoji || "📍";
+            document.getElementById("detailEmoji").textContent = f.emoji || "🍽️";
+            document.getElementById("detailName").textContent = f.name;
+            document.getElementById("detailTags").innerHTML = `
+                <span class="food-tag">${f.type}</span>
+                <span class="food-tag region">${regionEmoji} ${f.region}</span>
+            `;
+            const rows = [];
+            if (f.address) rows.push(`<div class="detail-row"><span class="detail-row-icon">📍</span><div><div class="detail-row-label">Địa chỉ</div><div class="detail-row-value">${f.address}</div></div></div>`);
+            if (f.price) rows.push(`<div class="detail-row"><span class="detail-row-icon">💰</span><div><div class="detail-row-label">Giá tham khảo</div><div class="detail-row-value" style="color:var(--coral);font-weight:700;">${f.price}</div></div></div>`);
+            rows.push(`<div class="detail-row"><span class="detail-row-icon">🍽️</span><div><div class="detail-row-label">Loại món</div><div class="detail-row-value">${f.type}</div></div></div>`);
+            document.getElementById("detailRows").innerHTML = rows.join("");
+            document.getElementById("detailBackdrop").classList.add("open");
+        }
+
+        function closeDetail() {
+            document.getElementById("detailBackdrop").classList.remove("open");
+        }
+
+        function closeDetailOutside(e) {
+            if (e.target === document.getElementById("detailBackdrop")) closeDetail();
         }
 
         function render() {
