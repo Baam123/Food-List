@@ -1,4 +1,3 @@
-// ====== DATA ======
 const REGIONS = {
     "TP.HCM": { emoji: "🏙️" },
     "Vũng Tàu": { emoji: "🏖️" },

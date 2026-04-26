@@ -51,7 +51,6 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* ====== HEADER ====== */
 header {
     position: sticky;
     top: 0;
@@ -132,7 +131,6 @@ header {
     pointer-events: none;
 }
 
-/* ====== REGION TABS ====== */
 .tabs-wrapper {
     position: sticky;
     top: 65px;
@@ -191,7 +189,6 @@ header {
     font-weight: 600;
 }
 
-/* ====== RANDOM BANNER ====== */
 .main {
     max-width: 900px;
     margin: 0 auto;
@@ -322,7 +319,6 @@ header {
     animation: popIn 0.35s cubic-bezier(.34, 1.56, .64, 1) forwards;
 }
 
-/* ====== FILTER CHIPS ====== */
 .filter-row {
     display: flex;
     align-items: center;
@@ -377,7 +373,6 @@ header {
     font-weight: 600;
 }
 
-/* ====== SECTION ====== */
 .section-header {
     display: flex;
     align-items: center;
@@ -406,7 +401,6 @@ header {
     padding: 3px 10px;
 }
 
-/* ====== FOOD GRID ====== */
 .food-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -507,7 +501,6 @@ header {
     color: var(--coral);
 }
 
-/* ====== EMPTY STATE ====== */
 .empty {
     text-align: center;
     padding: 60px 20px;
@@ -530,7 +523,6 @@ header {
     margin-top: 4px;
 }
 
-/* ====== ADD FAB ====== */
 .fab {
     position: fixed;
     bottom: 24px;
@@ -561,7 +553,6 @@ header {
     transform: scale(0.95);
 }
 
-/* ====== MODAL ====== */
 .modal-backdrop {
     position: fixed;
     inset: 0;
@@ -720,7 +711,6 @@ header {
     transform: scale(0.97);
 }
 
-/* ====== REGION GROUPS (all view) ====== */
 .region-section {
     margin-bottom: 32px;
 }
@@ -738,7 +728,6 @@ header {
     border-bottom: 1px solid var(--border);
 }
 
-/* ====== Scroll to top ====== */
 .scroll-top {
     position: fixed;
     bottom: 24px;
@@ -768,7 +757,6 @@ header {
     border-color: var(--coral-mid);
 }
 
-/* ====== ADDRESS ====== */
 .food-address {
     font-size: 11px;
     color: var(--text3);
@@ -785,7 +773,6 @@ header {
     margin-top: 4px;
 }
 
-/* ====== DETAIL MODAL ====== */
 .detail-modal {
     text-align: left;
     padding-top: 20px;
