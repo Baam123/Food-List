@@ -36,9 +36,10 @@ let foods = [
     { id: 28, name: "Lạp xưởng nướng đá", type: "Ăn vặt", price: "30-45k", emoji: "🌭", region: "TP.HCM", address: "..." },
     { id: 29, name: "Bắp xào", type: "Ăn vặt", price: "30-50k", emoji: "🌽", region: "TP.HCM", address: "..." },
     { id: 30, name: "Da gà chiên", type: "Ăn vặt", price: "30-50k", emoji: "🐥", region: "TP.HCM", address: "..." },
+    { id: 31, name: "Tacos", type: "Ăn vặt", price: "30-50k", emoji: "🌯", region: "TP.HCM", address: "..." },
 ];
 
-let nextId = 31;
+let nextId = 32;
 let activeRegion = "all";
 let activeType = "all";
 let searchQuery = "";
