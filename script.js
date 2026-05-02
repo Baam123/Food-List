@@ -32,14 +32,14 @@ let foods = [
     { id: 24, name: "The MayDay Tea", type: "Nước", price: "25-40k", emoji: "☕️", region: "TP.HCM", address: "320 Trịnh Đình Trọng, Tân Phú" },
     { id: 25, name: "Bột chiên", type: "Ăn vặt", price: "30-50k", emoji: "🍘", region: "TP.HCM", address: "Góc đường đối diện siêu thị Metro" },
     { id: 26, name: "Bánh tráng trộn siêu đông", type: "Ăn vặt", price: "20-30k", emoji: "🥢", region: "TP.HCM", address: "..." },
-    { id: 27, name: "Bánh trứng cút nướng", type: "Ăn vặt", price: "20-50k", emoji: "🥚", region: "TP.HCM", address: "..." },
+    { id: 27, name: "Bánh trứng cút nướng", type: "Ăn vặt", price: "20-50k", emoji: "🥚", region: "TP.HCM", address: "Gần chợ Bình Tiên" },
     { id: 28, name: "Lạp xưởng nướng đá", type: "Ăn vặt", price: "30-45k", emoji: "🌭", region: "TP.HCM", address: "..." },
-    { id: 29, name: "Bắp xào", type: "Ăn vặt", price: "30-50k", emoji: "🌽", region: "TP.HCM", address: "..." },
+    { id: 29, name: "Bắp xào", type: "Ăn vặt", price: "30-50k", emoji: "🌽", region: "TP.HCM", address: "Gần công viên Bình Phú" },
     { id: 30, name: "Da gà chiên", type: "Ăn vặt", price: "30-50k", emoji: "🐥", region: "TP.HCM", address: "..." },
     { id: 31, name: "Tacos", type: "Ăn vặt", price: "30-50k", emoji: "🌯", region: "TP.HCM", address: "..." },
 ];
 
-let nextId = 32;
+let nextId = foods.length ? Math.max(...foods.map(f => f.id)) + 1 : 1;
 let activeRegion = "all";
 let activeType = "all";
 let searchQuery = "";
@@ -49,16 +49,16 @@ let randomRegion = "all";
 function loadData() {
     try {
         const saved = localStorage.getItem("an-gi-day-foods");
-        if (saved) foods = JSON.parse(saved);
-        const savedId = localStorage.getItem("an-gi-day-nextid");
-        if (savedId) nextId = parseInt(savedId);
+        if (saved) {
+            foods = JSON.parse(saved);
+            nextId = Math.max(...foods.map(f => f.id)) + 1;
+        }
     } catch (e) { }
 }
 
 function saveData() {
     try {
         localStorage.setItem("an-gi-day-foods", JSON.stringify(foods));
-        localStorage.setItem("an-gi-day-nextid", String(nextId));
     } catch (e) { }
 }
 
