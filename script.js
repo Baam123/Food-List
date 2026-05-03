@@ -50,8 +50,11 @@ function loadData() {
     try {
         const saved = localStorage.getItem("an-gi-day-foods");
         if (saved) {
-            foods = JSON.parse(saved);
-            nextId = Math.max(...foods.map(f => f.id)) + 1;
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed) && parsed.length) {
+                foods = parsed;
+                nextId = Math.max(...foods.map(f => f.id)) + 1;
+            }
         }
     } catch (e) { }
 }
@@ -212,6 +215,8 @@ function updateRandomRegion(val) {
     document.getElementById("randomDishMeta").textContent = "";
     document.getElementById("randomDishAddress").textContent = "";
     highlightedId = null;
+    activeType = "all"; // reset type filter khi đổi region random
+    renderChips();
     renderContent();
 }
 
@@ -238,6 +243,9 @@ function randomFood() {
     if (activeRegion !== "all" && activeRegion !== f.region) {
         activeRegion = "all";
         activeType = "all";
+    } else if (activeType !== "all" && activeType !== f.type) {
+        // Đang filter type mà random ra món khác type → reset type để card hiện được
+        activeType = "all";
     }
 
     render();
@@ -251,8 +259,8 @@ function randomFood() {
 document.getElementById("searchInput").addEventListener("input", function () {
     searchQuery = this.value.trim();
     highlightedId = null;
+    renderChips(); // cập nhật chips theo kết quả search
     renderContent();
-    document.getElementById("sectionCount").textContent = `${getFiltered().length} món`;
 });
 
 function openModal() {
@@ -308,6 +316,7 @@ function addFood() {
 
 window.addEventListener("scroll", () => {
     const btn = document.getElementById("scrollTopBtn");
+    if (!btn) return;
     if (window.scrollY > 300) btn.classList.add("visible");
     else btn.classList.remove("visible");
 });
